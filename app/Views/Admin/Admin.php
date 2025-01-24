@@ -93,7 +93,7 @@
             url: "<?= site_url(); ?>admin/getDataAdmin",
             dataType: "json",
             success: function(response) {
-                $('.viewModal').html(response.data);
+                $('.viewdata').html(response.data);
 
             },
             error: function(xhr, ajaxOptions, throwError) {
@@ -112,7 +112,7 @@
                 url: "<?= site_url(); ?>admin/formTambahData",
                 dataType: "json",
                 success: function(response) {
-                    $('viewModal').html(response.data).show();
+                    $('.viewModal').html(response.data).show();
 
                     $('#modalTambah').modal('show');
                 },

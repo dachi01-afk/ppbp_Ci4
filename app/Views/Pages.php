@@ -25,6 +25,11 @@
     <link rel="stylesheet" href="<?= site_url(); ?>assets/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="<?= site_url(); ?>assets/plugins/summernote/summernote-bs4.min.css">
+
+    <!-- sweetalert -->
+    <link rel="stylesheet" type="text/css" href="<?= site_url(); ?>assets/plugins/node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <script src="<?= site_url(); ?>assets/plugins/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+
     <script src="<?= site_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 
 
