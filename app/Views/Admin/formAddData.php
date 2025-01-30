@@ -46,6 +46,7 @@
     $(document).ready(function() {
         $('.formAdmin').submit(function(e) {
             e.preventDefault();
+
             $.ajax({
                 type: "post",
                 url: $(this).attr('action'),

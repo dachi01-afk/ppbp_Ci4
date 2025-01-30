@@ -5,15 +5,47 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Dashboard::index');
 
 
-$routes->get('/admin', 'Admin::index');
-$routes->get('/admin/getDataAdmin', 'Admin::getDataAdmin');
-$routes->get('/admin/formTambahData', 'Admin::formTambahData');
-$routes->post('/admin/simpanData', 'Admin::simpanData');
-$routes->post('/admin/formEditData', 'Admin::formEditData');
-$routes->post('/admin/updateData', 'Admin::updateData');
+// $routes->get('/admin', 'Admin::index');
+// $routes->get('/admin/getDataAdmin', 'Admin::getDataAdmin');
+// $routes->get('/admin/formTambahData', 'Admin::formTambahData');
+// $routes->post('/admin/simpanData', 'Admin::simpanData');
+// $routes->post('/admin/formEditData', 'Admin::formEditData');
+// $routes->post('/admin/updateData', 'Admin::updateData');
 
 
-$routes->get('/member', 'Member::index');
+// $routes->get('/member', 'Member::index');
+
+
+$routes->get('/', 'Apps\Dashboard::index');
+
+$routes->group('apps', static function ($routes) {
+    $routes->get('/', 'Apps\Dashboard::index');
+
+    $routes->group('dashboard', static function ($routes) {
+        $routes->get('/',               'Apps\Dashboard::index');
+    });
+
+    $routes->group('admin', static function ($routes) {
+        $routes->get('/',               'Apps\Admin::index');
+
+        $routes->post('getshowdata',    'Apps\Admin::getShowData');
+        $routes->get('getbyId/(:num)',        'Apps\Admin::getById/$1');
+
+        $routes->post('insert',         'Apps\Admin::InsertData');
+        $routes->post('update',         'Apps\Admin::UpdateData');
+        $routes->post('delete',         'Apps\Admin::DeleteData');
+    });
+
+    $routes->group('member', static function ($routes) {
+        $routes->get('/',               'Apps\Member::index');
+        $routes->get('add',             'Apps\Member::Add');
+        $routes->get('edit/(:any)',     'Apps\Member::Edit/$1');
+
+        $routes->post('getshowdata',    'Apps\Member::getShowData');
+        $routes->post('insert',         'Apps\Member::InsertData');
+        $routes->post('update',         'Apps\Member::UpdateData');
+        $routes->post('delete',         'Apps\Member::DeleteData');
+    });
+});

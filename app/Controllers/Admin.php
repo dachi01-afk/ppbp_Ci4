@@ -6,9 +6,53 @@ use App\Models\adminModel;
 
 class Admin extends BaseController
 {
+    protected $adminModel;
+    protected $module;
+
+    function __construct()
+    {
+        $this->module = "Admin";
+        $this->adminModel = new \App\Models\AdminModel();
+    }
+
     public function index()
     {
-        return view('Admin/Admin');
+        $data['title'] = 'Data Admin';
+        return view('Admin/Admin', $data);
+    }
+
+    public function getShowData()
+    {
+        $start = (int) $this->request->getVar('start');
+        $length = (int) $this->request->getVar('length');
+        $search = $this->request->getVar('search')['value'];
+        $order = $this->request->getVar('order');
+
+        $data = [];
+        $dataTable = $this->adminModel->getData($search, $order);
+        foreach ($dataTable->limit($length, $start)->get()->getResult() as $result) {
+            $row = [];
+            $start++;
+            $row[] = '<div class="text-center">' . $start . '</div>';
+
+            $row[] = $result->nama_admin;
+            $row[] = $result->username;
+            $row[] = $result->level;
+
+            $btnEdit = "<a href='" . site_url()  . strtolower($this->module) . "/edit/" . $result->id_admin . "' type='button' class='btn btn-warning text-white btn-sm'><i class='fa fa-edit'></i></a>";
+            $btnDelete = "<button type='button' class='btn btn-danger btn-sm' id='delete' data-id='" . $result->id_admin . "'><i class='fa fa-trash-alt'></i></button>";
+            $row[] = "<div class='btn-group'>$btnEdit $btnDelete</div>";
+            $data[] = $row;
+        }
+
+        $countFilter = $dataTable->countAllResults();
+        $output = [
+            "draw"              => $this->request->getPost('draw'),
+            "recordsTotal"      => $countFilter,
+            "recordsFiltered"   => $countFilter,
+            "data"              => $data
+        ];
+        return $this->response->setJSON(json_encode($output));
     }
 
     public function getDataAdmin()
@@ -36,7 +80,7 @@ class Admin extends BaseController
         }
     }
 
-    public function formTambahData()
+    public function Add()
     {
 
         if ($this->request->isAJAX()) {
