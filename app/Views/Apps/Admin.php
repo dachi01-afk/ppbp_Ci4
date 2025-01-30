@@ -57,7 +57,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <?= form_open(strtolower($path) . '/' . strtolower($module) . '/insert', ['class' => 'formAdmin']) ?>
+                    <?= form_open(strtolower($path) . '/' . strtolower($module) . '/insert', ['class' => 'formAddAdmin']) ?>
                     <div class="modal-body">
                         <input type="hidden" id="id_admin" name="id_admin">
                         <div class="form-group">
@@ -100,28 +100,28 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <?= form_open(strtolower($path) . '/' . strtolower($module) . '/update', ['class' => 'formAdmin']) ?>
+                    <?= form_open(strtolower($path) . '/' . strtolower($module) . '/update', ['class' => 'formEditAdmin']) ?>
                     <div class="modal-body">
                         <input type="hidden" id="id_admin_edit" name="id_admin">
                         <div class="form-group">
                             <label for="">Nama Admin</label>
                             <input type="text" class="form-control" id="nama_admin_edit" name="nama_admin">
-                            <div class="invalid-feedback error_nama_admin"></div>
+                            <div class="invalid-feedback error_nama_admin_edit"></div>
                         </div>
                         <div class=" form-group">
                             <label for="">Username</label>
                             <input type="text" class="form-control" name="username" id="username_edit">
-                            <div class="invalid-feedback error_username"></div>
+                            <div class="invalid-feedback error_username_edit"></div>
                         </div>
                         <div class="form-group">
                             <label for="">Password</label>
                             <input type="password" class="form-control" name="password" id="password_edit">
-                            <div class="invalid-feedback error_password"></div>
+                            <div class="invalid-feedback error_password_edit"></div>
                         </div>
                         <div class="form-group">
                             <label for="">Jabatan</label>
                             <input type="text" class="form-control " name="level" id="level_edit">
-                            <div class="invalid-feedback error_level"></div>
+                            <div class="invalid-feedback error_level_edit"></div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary btnsimpan">Save</button>
@@ -159,6 +159,11 @@
             },
         });
 
+        $('.btnFormCloseModal').click(function(e) {
+            e.preventDefault();
+            formReload();
+        });
+
         // tampilakan form add data
         $('.tombol_addData').click(function(e) {
             e.preventDefault();
@@ -166,13 +171,8 @@
             $('#addModal').modal('show');
         });
 
-        $('.btnFormCloseModal').click(function(e) {
-            e.preventDefault();
-            formReload();
-        });
-
-
-        $('.formAdmin').submit(function(e) {
+        // insert data
+        $('.formAddAdmin').submit(function(e) {
             e.preventDefault();
             $.ajax({
                 type: "post",
@@ -220,7 +220,6 @@
         // tampilakan form Edit data
         $(document).on('click', '.tombol_editData', function() {
             const id_admin = $(this).data('id');
-            console.log("ID Admin yang diklik:", id_admin);
 
             $.ajax({
                 url: host + path.toLowerCase() + '/' + module.toLowerCase() + '/getbyId/' + id_admin,
@@ -242,6 +241,91 @@
                 },
                 error: function(xhr, ajaxOptions, throwError) {
                     alert(xhr.status + "\n" + xhr.responseText + "\n" + throwError);
+                }
+            });
+        });
+
+        // update data
+        $('.formEditAdmin').submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: "post",
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: "json",
+
+                beforeSend: function() {
+                    $('.btnsimpan').prop('disabled', true);
+                    $('.btnsimpan').html('<i class="fa fa-spin fa-spinner"></i> Saving...');
+                },
+
+                complete: function() {
+                    $('.btnsimpan').prop('disabled', false);
+                    $('.btnsimpan').html('Save');
+                },
+
+                success: function(response) {
+                    console.log("Data yang dikirim:", response.data);
+                    if (response.rcode == "00") {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Berhasil",
+                            text: response.message
+                        });
+
+                        $('#editModal').modal('hide');
+                        dataTableView.ajax.reload();
+                        formReload();
+                    } else if (response.rcode == "11") {
+                        $('.is-invalid').removeClass('is-invalid');
+                        Object.keys(response.errors).forEach(key => {
+                            $('#' + key + '_edit').addClass('is-invalid');
+                            $('.error_' + key + '_edit').html(response.errors[key]);
+                        });
+                    }
+                },
+                error: function(xhr, ajaxOptions, throwError) {
+                    alert(xhr.status + "\n" + xhr.responseText + "\n" + throwError);
+                }
+            });
+
+            return false;
+        });
+
+        // delete data
+        $(document).on('click', '.tombol_deletData', function(e) {
+            var id_admin = $(this).data('id');
+
+            Swal.fire({
+                title: "Konfirmasi",
+                text: "Yakin ingin menghapus data ini?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Ya, Hapus!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: host + path.toLowerCase() + '/' + module.toLowerCase() + '/delete',
+                        data: {
+                            id_admin: id_admin
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.rcode == "00") {
+                                Swal.fire("Deleted!", response.message, "success");
+                                dataTableView.ajax.reload();
+                            } else {
+                                Swal.fire("Error!", response.message, "error");
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+                        }
+                    });
                 }
             });
         });

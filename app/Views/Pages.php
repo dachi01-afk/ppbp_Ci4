@@ -70,9 +70,6 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <h2 class="font-weight-bolder"><?= $title ?></h2>
-                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">

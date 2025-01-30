@@ -51,7 +51,7 @@ class Admin extends BaseController
             $row[] = $result->level;
 
             $btnEdit = "<button type='button' class='btn btn-warning text-white btn-sm tombol_editData' id='edit' data-id='" . $result->id_admin . "'><i class='fa fa-edit'></i></button>";
-            $btnDelete = "<button type='button' class='btn btn-danger btn-sm' id='delete' data-id='" . $result->id_admin . "'><i class='fa fa-trash-alt'></i></button>";
+            $btnDelete = "<button type='button' class='btn btn-danger btn-sm tombol_deletData' id='delete' data-id='" . $result->id_admin . "'><i class='fa fa-trash-alt'></i></button>";
             $row[] = "<div class='btn-group'>$btnEdit $btnDelete</div>";
             $data[] = $row;
         }
@@ -171,16 +171,30 @@ class Admin extends BaseController
             exit('Maaf data tidak di proses');
         }
     }
-    public function UpdateData($id_admin)
+
+    public function UpdateData()
     {
         if ($this->request->isAJAX()) {
+
+            $id_admin = $this->request->getPost('id_admin');
+
+            if (!$id_admin) {
+                return $this->response->setJSON([
+                    'rcode' => "11",
+                    'message' => "ID Admin tidak ditemukan!"
+                ]);
+            }
+
+
+            $id_admin = $this->request->getPost('id_admin');
+            $nama_admin = $this->request->getPost('nama_admin');
+            $username = $this->request->getPost('username');
+            $password = $this->request->getPost('password');
+            $level = $this->request->getPost('level');
+
             $validation = \Config\Services::validation();
 
             $valid = $this->validate([
-                'nama_admin' => 'required|min_length[3]|alpha_space|max_length[50]',
-                'username'   => "required|min_length[5]|alpha_numeric|max_length[20]|is_unique[tbl_admin.username,id_admin,{$id_admin}]",
-                'level'      => 'required',
-
                 'nama_admin' => [
                     'label'     => 'Nama Admin',
                     'rules'     => 'required|min_length[3]|alpha_space|max_length[50]',
@@ -194,16 +208,17 @@ class Admin extends BaseController
 
                 'username' => [
                     'label'     => 'Username',
-                    'rules'     => "required|min_length[5]|alpha_numeric|max_length[20]|is_unique[tbl_admin.username,id_admin,{$id_admin}]",
+                    'rules'     => 'required|min_length[5]|max_length[50]|is_unique[tbl_admin.username,id_admin,' . $id_admin . ']',
                     'errors'    => [
                         'required'      => '{field} harus diisi.',
-                        'is_unique'     => '{field} sudah digunakan.',
                         'min_length'    => '{field} minimal 5 karakter.',
+                        'is_unique'     => '{field} sudah digunakan.',
                         'alpha_numeric' => '{field} hanya boleh berisi huruf dan angka.',
                         'max_length'    => '{field} maksimal 20 karakter.',
                     ]
-                ],
 
+
+                ],
 
                 'level' => [
                     'label'     => 'Jabatan',
@@ -215,31 +230,58 @@ class Admin extends BaseController
             ]);
 
             if (!$valid) {
-                return $this->response->setJSON([
-                    "rcode" => "11",
-                    "errors" => $validation->getErrors(),
-                    "message" => "Validasi gagal.",
-                ]);
+                $response = [
+                    'rcode' => "11",
+                    'errors' => $validation->getErrors()
+                ];
+            } else {
+
+
+                $model = $this->adminModel->find($id_admin);
+                $newPassword = ($password) ? password_hash($password, PASSWORD_DEFAULT) : $model['password'];
+
+                $data = [
+                    'nama_admin' => $nama_admin,
+                    'username' => $username,
+                    'password' => $newPassword,
+                    'level' => $level
+                ];
+
+                $this->adminModel->update($id_admin, $data);
+
+                $response = [
+                    'rcode' => "00",
+                    'message' => "Data berhasil diperbarui"
+                ];
             }
 
-            $data = [
-                'nama_admin' => $this->request->getVar('nama_admin'),
-                'username'   => $this->request->getVar('username'),
-                'level'      => $this->request->getVar('level'),
-            ];
-
-
-            if ($this->request->getVar('password')) {
-                $data['password'] = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
-            }
-
-            $this->adminModel->update($id_admin, $data);
-
-            return $this->response->setJSON([
-                "rcode" => "00",
-                "message" => "Data berhasil diperbarui.",
-            ]);
+            return $this->response->setJSON($response);
         }
     }
-    public function DeleteData() {}
+
+
+    public function DeleteData()
+    {
+        if ($this->request->isAJAX()) {
+            $id_admin = $this->request->getPost('id_admin');
+
+            $adminModel = new \App\Models\AdminModel();
+            $delete = $adminModel->delete($id_admin);
+
+            if ($delete) {
+                $response = [
+                    'rcode' => '00',
+                    'message' => 'Data berhasil dihapus!'
+                ];
+            } else {
+                $response = [
+                    'rcode' => '99',
+                    'message' => 'Gagal menghapus data!'
+                ];
+            }
+            return $this->response->setJSON($response);
+        } else {
+            return redirect()->to('/admin');
+        }
+    }
 }
