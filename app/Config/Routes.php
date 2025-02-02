@@ -31,7 +31,7 @@ $routes->group('apps', static function ($routes) {
         $routes->get('/',               'Apps\Admin::index');
 
         $routes->post('getshowdata',    'Apps\Admin::getShowData');
-        $routes->get('getbyId/(:num)',        'Apps\Admin::getById/$1');
+        $routes->get('getbyId/(:num)',  'Apps\Admin::getById/$1');
 
         $routes->post('insert',         'Apps\Admin::InsertData');
         $routes->post('update',         'Apps\Admin::UpdateData');
@@ -47,5 +47,16 @@ $routes->group('apps', static function ($routes) {
         $routes->post('insert',         'Apps\Member::InsertData');
         $routes->post('update',         'Apps\Member::UpdateData');
         $routes->post('delete',         'Apps\Member::DeleteData');
+    });
+
+    $routes->group('galeri', static function ($routes) {
+        $routes->get('/',               'Apps\Galeri::index');
+
+        $routes->post('getshowdata',    'Apps\Galeri::getShowData');
+        $routes->get('getbyId/(:num)',  'Apps\Galeri::getById/$1');
+
+        $routes->post('insert',         'Apps\Galeri::InsertData');
+        $routes->post('update',         'Apps\Galeri::UpdateData');
+        $routes->post('delete',         'Apps\Galeri::DeleteData');
     });
 });

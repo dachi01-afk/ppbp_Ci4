@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class AdminModel extends Model
+class GaleriModel extends Model
 {
     protected $table = 'tbl_galeri';
     protected $primaryKey = 'id_foto';
@@ -13,16 +13,17 @@ class AdminModel extends Model
 
     function getData($search, $order)
     {
-        $columnOrder = [null, 'nama_foto', 'foto_galeri'];
+        $columnOrder = [null, 'nama_foto', 'foto_galeri', null];
         $orderDefault = ['nama_foto' => 'DESC'];
 
         $this->select("tbl_galeri.*");
 
         $where = "";
         if ($search <> "") {
-            $where .= " (nama_foto like '%$search%'";
-            $where .= " OR username like '%$search%'";
-            $where .= " OR level like '%$search%')";
+            $where .= " (";
+            $where .= " nama_foto like '%$search%'";
+            $where .= " OR foto_galeri like '%$search%'";
+            $where .= " )";
         }
 
         if ($where <> "") {

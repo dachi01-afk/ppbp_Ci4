@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin | Dashboard</title>
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> -->
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= site_url(); ?>assets/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="<?= site_url(); ?>assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- iCheck -->
@@ -128,7 +128,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= site_url(); ?>galeri" class="nav-link">
+                            <a href="<?= site_url(); ?>apps/galeri" class="nav-link">
                                 <i class="nav-icon fa-solid fa-film"></i>
                                 <p>
                                     Data Galeri
