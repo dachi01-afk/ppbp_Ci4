@@ -136,7 +136,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= site_url(); ?>pengumuman" class="nav-link">
+                            <a href="<?= site_url(); ?>apps/pengumuman" class="nav-link">
                                 <i class="nav-icon fa-solid fa-bell"></i>
                                 <p>
                                     Data Pengumuman

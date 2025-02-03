@@ -40,10 +40,10 @@ $routes->group('apps', static function ($routes) {
 
     $routes->group('member', static function ($routes) {
         $routes->get('/',               'Apps\Member::index');
-        $routes->get('add',             'Apps\Member::Add');
-        $routes->get('edit/(:any)',     'Apps\Member::Edit/$1');
 
         $routes->post('getshowdata',    'Apps\Member::getShowData');
+        $routes->get('getbyId/(:num)',  'Apps\Member::getById/$1');
+
         $routes->post('insert',         'Apps\Member::InsertData');
         $routes->post('update',         'Apps\Member::UpdateData');
         $routes->post('delete',         'Apps\Member::DeleteData');
@@ -58,5 +58,16 @@ $routes->group('apps', static function ($routes) {
         $routes->post('insert',         'Apps\Galeri::InsertData');
         $routes->post('update',         'Apps\Galeri::UpdateData');
         $routes->post('delete',         'Apps\Galeri::DeleteData');
+    });
+
+    $routes->group('pengumuman', static function ($routes) {
+        $routes->get('/',               'Apps\Pengumuman::index');
+
+        $routes->post('getshowdata',    'Apps\Pengumuman::getShowData');
+        $routes->get('getbyId/(:num)',  'Apps\Pengumuman::getById/$1');
+
+        $routes->post('insert',         'Apps\Pengumuman::InsertData');
+        $routes->post('update',         'Apps\Pengumuman::UpdateData');
+        $routes->post('delete',         'Apps\Pengumuman::DeleteData');
     });
 });

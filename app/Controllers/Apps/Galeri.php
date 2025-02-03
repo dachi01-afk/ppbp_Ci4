@@ -49,8 +49,6 @@ class Galeri extends BaseController
             $row[] = $result->nama_foto;
             $row[] = '<img src="' . base_url('images/' . $result->foto_galeri) . '" width="100" height="100" class="img-thumbnail">';
 
-            // $row[] = $result->foto_galeri;
-
             $btnEdit = "<button type='button' class='btn btn-warning text-white btn-sm tombol_editData' id='edit' data-id='" . $result->id_foto . "'><i class='fa fa-edit'></i></button>";
             $btnDelete = "<button type='button' class='btn btn-danger btn-sm tombol_deletData' id='delete' data-id='" . $result->id_foto . "'><i class='fa fa-trash-alt'></i></button>";
             $row[] = "<div class='btn-group'>$btnEdit $btnDelete</div>";
@@ -124,7 +122,9 @@ class Galeri extends BaseController
                     "message"      => "Data gagal tersimpan",
                 ];
                 return $this->response->setJSON($respond);
-            } else if ($file && $file->isValid() && !$file->hasMoved()) {
+            }
+
+            if ($file && $file->isValid() && !$file->hasMoved()) {
                 $newName = $file->getRandomName();
                 $file->move('images', $newName);
 
@@ -231,7 +231,7 @@ class Galeri extends BaseController
             }
             return $this->response->setJSON($response);
         } else {
-            return redirect()->to('/admin');
+            return redirect()->to('/galeri');
         }
     }
 };

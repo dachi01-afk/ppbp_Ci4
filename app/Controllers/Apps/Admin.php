@@ -139,12 +139,13 @@ class Admin extends BaseController
             if (!$valid) {
                 $respond = [
                     "rcode"        => "11",
-                    "errors" => [
-                        'nama_admin'    => $validation->getError('nama_admin'),
-                        'username'      => $validation->getError('username'),
-                        'password'      => $validation->getError('password'),
-                        'level'         => $validation->getError('level'),
-                    ],
+                    "errors" => $this->validator->getErrors(),
+                    // "errors" => [
+                    //     'nama_admin'    => $validation->getError('nama_admin'),
+                    //     'username'      => $validation->getError('username'),
+                    //     'password'      => $validation->getError('password'),
+                    //     'level'         => $validation->getError('level'),
+                    // ],
                     "message"      => "Data Admin gagal tersimpan",
                 ];
                 return $this->response->setJSON($respond);
@@ -152,7 +153,7 @@ class Admin extends BaseController
                 $simpandata = [
                     'nama_admin' => $this->request->getVar('nama_admin'),
                     'username'   => $this->request->getVar('username'),
-                    'password'   => $this->request->getVar('password'),
+                    'password'   => md5($this->request->getVar('password')),
                     'level'      => $this->request->getVar('level')
                 ];
 
@@ -275,7 +276,7 @@ class Admin extends BaseController
                 ];
             } else {
                 $response = [
-                    'rcode' => '99',
+                    'rcode' => '11',
                     'message' => 'Gagal menghapus data!'
                 ];
             }

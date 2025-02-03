@@ -6,23 +6,25 @@ use CodeIgniter\Model;
 
 class MemberModel extends Model
 {
-    protected $table = 'tbl_pendaftar';
-    protected $primaryKey = 'id_pendaftaran';
-    protected $allowedFields = ['no_pendaftaran', 'NISN', 'nama', 'tgl_lahir'];
+    protected $table = 'tbl_register';
+    protected $primaryKey = 'id_register';
+    protected $allowedFields = ['NISN', 'nama', 'username', 'password'];
 
 
     function getData($search, $order)
     {
-        $columnOrder = [null, 'no_pendaftaran', 'NISN', 'nama', 'tgl_lahir', null];
-        $orderDefault = ['no_pendaftaran' => 'DESC'];
+        $columnOrder = [null, 'NISN', 'nama', 'username', null];
+        $orderDefault = ['NISN' => 'DESC'];
 
-        $this->select("tbl_pendaftar.*");
+        $this->select("tbl_register.*");
 
         $where = "";
         if ($search <> "") {
-            $where .= " (no_pendaftaran like '%$search%'";
+            $where .= " (";
+            $where .= " NISN like '%$search%'";
             $where .= " OR nama like '%$search%'";
-            $where .= " OR tgl_lahir like '%$search%')";
+            $where .= " OR username like '%$search%'";
+            $where .= " )";
         }
 
         if ($where <> "") {
