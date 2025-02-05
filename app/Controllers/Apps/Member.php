@@ -95,16 +95,7 @@ class Member extends BaseController
 
         if ($this->request->isAJAX()) {
 
-            $id_register = $this->request->getPost('id_register');
-
-            if (!$id_register) {
-                return $this->response->setJSON([
-                    'rcode' => "11",
-                    'message' => "ID Admin tidak ditemukan!"
-                ]);
-            }
-
-
+            $id_register = $this->request->getPost('id_register_edit');
             $NISN = $this->request->getPost('NISN_edit');
             $nama = $this->request->getPost('nama_edit');
             $username = $this->request->getPost('username_edit');

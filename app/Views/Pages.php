@@ -120,7 +120,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="<?= site_url(); ?>pendaftar" class="nav-link">
+                            <a href="<?= site_url(); ?>apps/pendaftar" class="nav-link">
                                 <i class="nav-icon fa-solid fa-file-lines"></i>
                                 <p>
                                     Data Pendaftar
@@ -153,13 +153,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="<?= site_url(); ?>lulus" class="nav-link">
+                                    <a href="<?= site_url(); ?>apps/pendaftar/lulus" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Siswa Lulus</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?= site_url(); ?>tidaklulus" class="nav-link">
+                                    <a href="<?= site_url(); ?>apps/pendaftar/tidaklulus" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Siswa Tidak Lulus</p>
                                     </a>

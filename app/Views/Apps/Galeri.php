@@ -143,6 +143,11 @@
             formReload();
         });
 
+        $('.close').click(function(e) {
+            e.preventDefault();
+            formReload();
+        });
+
         // tampilakan form add data
         $('.tombol_addData').click(function(e) {
             e.preventDefault();
@@ -186,10 +191,15 @@
                         formReload();
                     } else if (response.rcode == "11") {
                         $('.is-invalid').removeClass('is-invalid');
+                        $('.invalid-feedback').html('').hide();
                         Object.keys(response.errors).forEach(key => {
-                            $('#' + key).addClass('is-invalid');
-                            $('.error_' + key).html(response.errors[key]);
-                        });
+                            let inputField = $('#' + key);
+                            if (inputField.length) {
+                                inputField.addClass('is-invalid');
+                                $('.error_' + key).html(response.errors[key]).show();
+
+                            }
+                        });;
                     }
                 },
                 error: function(xhr, ajaxOptions, throwError) {
@@ -265,10 +275,15 @@
                         formReload();
                     } else if (response.rcode == "11") {
                         $('.is-invalid').removeClass('is-invalid');
+                        $('.invalid-feedback').html('').hide();
                         Object.keys(response.errors).forEach(key => {
-                            $('#' + key + '_edit').addClass('is-invalid');
-                            $('.error_' + key + '_edit').html(response.errors[key]);
-                        });
+                            let inputField = $('#' + key);
+                            if (inputField.length) {
+                                inputField.addClass('is-invalid');
+                                $('.error_' + key).html(response.errors[key]).show();
+
+                            }
+                        });;
                     }
                 },
                 error: function(xhr, ajaxOptions, throwError) {

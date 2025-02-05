@@ -132,12 +132,7 @@ class Pengumuman extends BaseController
             if (!$valid) {
                 $respond = [
                     "rcode"        => "11",
-                    "errors" => [
-                        'tgl_pengumuman'    => $validation->getError('tgl_pengumuman'),
-                        'judul_pengumuman'  => $validation->getError('judul_pengumuman'),
-                        'isi_pengumuman'    => $validation->getError('isi_pengumuman'),
-                        'foto_pengumuman'   => $validation->getError('foto_pengumuman'),
-                    ],
+                    'errors'       => $validation->getErrors(),
                     "message"      => "Data gagal tersimpan",
                 ];
                 return $this->response->setJSON($respond);
@@ -218,7 +213,7 @@ class Pengumuman extends BaseController
             if (!$valid) {
                 return $this->response->setJSON([
                     "rcode"   => "11",
-                    "errors"  => $validation->getErrors(),
+                    'errors'  => $validation->getErrors(),
                     "message" => "Data gagal tersimpan",
                 ]);
             }
@@ -227,6 +222,16 @@ class Pengumuman extends BaseController
             $oldFile = $oldData['foto_pengumuman'];
 
             if ($file->isValid() && !$file->hasMoved()) {
+                $mimeType = $file->getMimeType();
+                $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+                if (!in_array($mimeType, $allowedMimeTypes)) {
+                    return $this->response->setJSON([
+                        "rcode" => "11",
+                        "errors" => ["foto_pengumuman_edit" => "File yang diunggah tidak valid."],
+                        "message" => "Gagal menyimpan data karena format file tidak sesuai."
+                    ]);
+                }
                 if ($oldFile && file_exists('images/Pengumuman/' . $oldFile)) {
                     unlink('images/Pengumuman/' . $oldFile);
                 }

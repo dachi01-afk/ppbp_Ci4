@@ -102,25 +102,25 @@
                     </div>
                     <?= form_open(strtolower($path) . '/' . strtolower($module) . '/update', ['class' => 'formEditAdmin']) ?>
                     <div class="modal-body">
-                        <input type="hidden" id="id_admin_edit" name="id_admin">
+                        <input type="hidden" id="id_admin_edit" name="id_admin_edit">
                         <div class="form-group">
                             <label for="">Nama Admin</label>
-                            <input type="text" class="form-control" id="nama_admin_edit" name="nama_admin">
+                            <input type="text" class="form-control" id="nama_admin_edit" name="nama_admin_edit">
                             <div class="invalid-feedback error_nama_admin_edit"></div>
                         </div>
                         <div class=" form-group">
                             <label for="">Username</label>
-                            <input type="text" class="form-control" name="username" id="username_edit">
+                            <input type="text" class="form-control" name="username_edit" id="username_edit">
                             <div class="invalid-feedback error_username_edit"></div>
                         </div>
                         <div class="form-group">
                             <label for="">Password</label>
-                            <input type="password" class="form-control" name="password" id="password_edit">
+                            <input type="password" class="form-control" name="password_edit" id="password_edit">
                             <div class="invalid-feedback error_password_edit"></div>
                         </div>
                         <div class="form-group">
                             <label for="">Jabatan</label>
-                            <input type="text" class="form-control " name="level" id="level_edit">
+                            <input type="text" class="form-control " name="level_edit" id="level_edit">
                             <div class="invalid-feedback error_level_edit"></div>
                         </div>
                         <div class="modal-footer">
@@ -164,6 +164,13 @@
             formReload();
         });
 
+        $('.close').click(function(e) {
+            e.preventDefault();
+            formReload();
+        });
+
+
+
         // tampilakan form add data
         $('.tombol_addData').click(function(e) {
             e.preventDefault();
@@ -204,7 +211,7 @@
                         $('.is-invalid').removeClass('is-invalid');
                         Object.keys(response.errors).forEach(key => {
                             $('#' + key).addClass('is-invalid');
-                            $('.error_' + key).html(response.errors[key]);
+                            $('.error_' + key).html(response.errors[key]).show();
                         });
                     }
                 },
@@ -279,9 +286,14 @@
                         formReload();
                     } else if (response.rcode == "11") {
                         $('.is-invalid').removeClass('is-invalid');
+                        $('.invalid-feedback').html('').hide();
                         Object.keys(response.errors).forEach(key => {
-                            $('#' + key + '_edit').addClass('is-invalid');
-                            $('.error_' + key + '_edit').html(response.errors[key]);
+                            let inputField = $('#' + key);
+                            if (inputField.length) {
+                                inputField.addClass('is-invalid');
+                                $('.error_' + key).html(response.errors[key]).show();
+
+                            }
                         });
                     }
                 },

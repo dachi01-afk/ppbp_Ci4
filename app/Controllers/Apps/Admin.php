@@ -177,26 +177,16 @@ class Admin extends BaseController
     {
         if ($this->request->isAJAX()) {
 
-            $id_admin = $this->request->getPost('id_admin');
-
-            if (!$id_admin) {
-                return $this->response->setJSON([
-                    'rcode' => "11",
-                    'message' => "ID Admin tidak ditemukan!"
-                ]);
-            }
-
-
-            $id_admin = $this->request->getPost('id_admin');
-            $nama_admin = $this->request->getPost('nama_admin');
-            $username = $this->request->getPost('username');
-            $password = $this->request->getPost('password');
-            $level = $this->request->getPost('level');
+            $id_admin = $this->request->getPost('id_admin_edit');
+            $nama_admin = $this->request->getPost('nama_admin_edit');
+            $username = $this->request->getPost('username_edit');
+            $password = $this->request->getPost('password_edit');
+            $level = $this->request->getPost('level_edit');
 
             $validation = \Config\Services::validation();
 
             $valid = $this->validate([
-                'nama_admin' => [
+                'nama_admin_edit' => [
                     'label'     => 'Nama Admin',
                     'rules'     => 'required|min_length[3]|alpha_space|max_length[50]',
                     'errors'    => [
@@ -207,7 +197,7 @@ class Admin extends BaseController
                     ]
                 ],
 
-                'username' => [
+                'username_edit' => [
                     'label'     => 'Username',
                     'rules'     => 'required|min_length[5]|max_length[50]|is_unique[tbl_admin.username,id_admin,' . $id_admin . ']',
                     'errors'    => [
@@ -221,7 +211,7 @@ class Admin extends BaseController
 
                 ],
 
-                'level' => [
+                'level_edit' => [
                     'label'     => 'Jabatan',
                     'rules'     => 'required',
                     'errors'    => [

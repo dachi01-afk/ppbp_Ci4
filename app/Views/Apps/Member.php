@@ -57,7 +57,7 @@
                     </div>
                     <?= form_open(strtolower($path) . '/' . strtolower($module) . '/update', ['class' => 'formEdit']) ?>
                     <div class="modal-body">
-                        <input type="hidden" id="id_register_edit" name="id_register">
+                        <input type="hidden" id="id_register_edit" name="id_register_edit">
                         <div class="form-group">
                             <label for="">NISN</label>
                             <input type="text" class="form-control" id="NISN_edit" name="NISN_edit">
@@ -188,6 +188,11 @@
             formReload();
         });
 
+        $('.close').click(function(e) {
+            e.preventDefault();
+            formReload();
+        });
+
         // tampilakan form Edit data
         $(document).on('click', '.tombol_editData', function() {
             const id_register = $(this).data('id');
@@ -250,9 +255,14 @@
                         formReload();
                     } else if (response.rcode == "11") {
                         $('.is-invalid').removeClass('is-invalid');
+                        $('.invalid-feedback').html('').hide();
                         Object.keys(response.errors).forEach(key => {
-                            $('#' + key + '_edit').addClass('is-invalid');
-                            $('.error_' + key + '_edit').html(response.errors[key]);
+                            let inputField = $('#' + key);
+                            if (inputField.length) {
+                                inputField.addClass('is-invalid');
+                                $('.error_' + key).html(response.errors[key]).show();
+
+                            }
                         });
                     }
                 },

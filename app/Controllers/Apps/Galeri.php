@@ -47,7 +47,7 @@ class Galeri extends BaseController
             $row[] = '<div class="text-center">' . $start . '</div>';
 
             $row[] = $result->nama_foto;
-            $row[] = '<img src="' . base_url('images/' . $result->foto_galeri) . '" width="100" height="100" class="img-thumbnail">';
+            $row[] = '<img src="' . base_url('images/Galeri/' . $result->foto_galeri) . '" width="100" height="100" class="img-thumbnail">';
 
             $btnEdit = "<button type='button' class='btn btn-warning text-white btn-sm tombol_editData' id='edit' data-id='" . $result->id_foto . "'><i class='fa fa-edit'></i></button>";
             $btnDelete = "<button type='button' class='btn btn-danger btn-sm tombol_deletData' id='delete' data-id='" . $result->id_foto . "'><i class='fa fa-trash-alt'></i></button>";
@@ -115,10 +115,7 @@ class Galeri extends BaseController
             if (!$valid) {
                 $respond = [
                     "rcode"        => "11",
-                    "errors" => [
-                        'nama_foto'    => $validation->getError('nama_foto'),
-                        'foto_galeri'      => $validation->getError('foto_galeri'),
-                    ],
+                    'errors'       => $validation->getErrors(),
                     "message"      => "Data gagal tersimpan",
                 ];
                 return $this->response->setJSON($respond);
@@ -164,7 +161,7 @@ class Galeri extends BaseController
                 ],
 
                 'foto_galeri_edit'  => [
-                    'rules'       => 'permit_empty|is_image[foto_galeri]|mime_in[foto_galeri,image/jpg,image/jpeg,image/png]|max_size[foto_galeri,2048]',
+                    'rules'       => 'permit_empty|is_image[foto_galeri_edit]|mime_in[foto_galeri_edit,image/jpg,image/jpeg,image/png]|max_size[foto_galeri_edit,2048]',
                     'errors'      => [
                         'is_image'      => 'File yang diunggah harus berupa gambar.',
                         'mime_in'       => 'Format gambar harus JPG, JPEG, atau PNG.',
@@ -185,12 +182,23 @@ class Galeri extends BaseController
             $oldFile = $oldData['foto_galeri'];
 
             if ($file->isValid() && !$file->hasMoved()) {
-                if ($oldFile && file_exists('images/' . $oldFile)) {
-                    unlink('images/' . $oldFile);
+                $mimeType = $file->getMimeType();
+                $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+                if (!in_array($mimeType, $allowedMimeTypes)) {
+                    return $this->response->setJSON([
+                        "rcode" => "11",
+                        "errors" => ["foto_galeri_edit" => "File yang diunggah tidak valid."],
+                        "message" => "Gagal menyimpan data karena format file tidak sesuai."
+                    ]);
+                }
+
+                if ($oldFile && file_exists('images/Galeri/' . $oldFile)) {
+                    unlink('images/Galeri/' . $oldFile);
                 }
 
                 $newFileName = $file->getRandomName();
-                $file->move('images', $newFileName);
+                $file->move('images/Galeri', $newFileName);
             } else {
                 $newFileName = $oldFile;
             }

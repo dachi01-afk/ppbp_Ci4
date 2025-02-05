@@ -70,4 +70,21 @@ $routes->group('apps', static function ($routes) {
         $routes->post('update',         'Apps\Pengumuman::UpdateData');
         $routes->post('delete',         'Apps\Pengumuman::DeleteData');
     });
+
+    $routes->group('pendaftar', static function ($routes) {
+        $routes->get('/',                       'Apps\Pendaftar::index');
+        $routes->get('lulus',                  'Apps\Pendaftar::Lulus');
+        $routes->get('tidaklulus',             'Apps\Pendaftar::Tidaklulus');
+
+        $routes->post('getshowdata',            'Apps\Pendaftar::getShowData');
+        $routes->get('getbyId/(:num)',          'Apps\Pendaftar::getById/$1');
+
+        $routes->post('status',                 'Apps\Pendaftar::updateStatus');
+        $routes->post('getshowdatalulus',       'Apps\Pendaftar::getShowDataLulus');
+        $routes->post('getshowdatatidaklulus',  'Apps\Pendaftar::getShowDataTidakLulus');
+
+        $routes->post('insert',                 'Apps\Pendaftar::InsertData');
+        $routes->post('update',                 'Apps\Pendaftar::UpdateData');
+        $routes->post('delete',                 'Apps\Pendaftar::DeleteData');
+    });
 });
