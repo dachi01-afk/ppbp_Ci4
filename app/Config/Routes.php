@@ -6,21 +6,16 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-
-// $routes->get('/admin', 'Admin::index');
-// $routes->get('/admin/getDataAdmin', 'Admin::getDataAdmin');
-// $routes->get('/admin/formTambahData', 'Admin::formTambahData');
-// $routes->post('/admin/simpanData', 'Admin::simpanData');
-// $routes->post('/admin/formEditData', 'Admin::formEditData');
-// $routes->post('/admin/updateData', 'Admin::updateData');
-
-
-// $routes->get('/member', 'Member::index');
-
-
-$routes->get('/', 'Apps\Dashboard::index');
+// $routes->get('/landing', 'LandingPage::index');
 
 $routes->group('apps', static function ($routes) {
+
+    $routes->group('landing', static function ($routes) {
+        $routes->get('/',               'LandingPage::index');
+        $routes->get('panduan',         'LandingPage::Panduan');
+        $routes->get('galeri',         'LandingPage::Galeri');
+    });
+
     $routes->get('/', 'Apps\Dashboard::index');
 
     $routes->group('dashboard', static function ($routes) {
@@ -73,8 +68,8 @@ $routes->group('apps', static function ($routes) {
 
     $routes->group('pendaftar', static function ($routes) {
         $routes->get('/',                       'Apps\Pendaftar::index');
-        $routes->get('lulus',                  'Apps\Pendaftar::Lulus');
-        $routes->get('tidaklulus',             'Apps\Pendaftar::Tidaklulus');
+        $routes->get('lulus',                   'Apps\Pendaftar::Lulus');
+        $routes->get('tidaklulus',              'Apps\Pendaftar::Tidaklulus');
 
         $routes->post('getshowdata',            'Apps\Pendaftar::getShowData');
         $routes->get('getbyId/(:num)',          'Apps\Pendaftar::getById/$1');

@@ -1,4 +1,4 @@
-<?= $this->extend('Pages') ?>
+<?= $this->extend('Apps/Pages') ?>
 <?= $this->section('content-page') ?>
 <?php switch ($act) {
     default: ?>
