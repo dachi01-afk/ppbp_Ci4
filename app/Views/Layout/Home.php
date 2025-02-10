@@ -1,4 +1,4 @@
-<?= $this->extend('Pages') ?>
+<?= $this->extend('Layout/Pages') ?>
 <?= $this->section('content') ?>
 
 <!-- Hero Section -->
@@ -28,10 +28,6 @@
 <!-- Portfolio Section -->
 <?= $this->include('Layout/Informasi') ?>
 <!-- /Portfolio Section -->
-
-<!-- Contact Section -->
-<?= $this->include('Layout/Contact') ?>
-<!-- /Contact Section -->
 
 
 

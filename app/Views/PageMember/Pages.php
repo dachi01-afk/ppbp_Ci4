@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Index - Lumia Bootstrap Template</title>
+    <title>Home</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
 
     <!-- Favicons -->
-    <link href="<?= site_url(); ?>assets/img/favicon.png" rel="icon">
+    <link href="<?= site_url(); ?>images/img/logo.jpg" rel="icon">
     <link href="<?= site_url(); ?>assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Fonts -->
@@ -26,15 +26,18 @@
 
     <!-- Main CSS File -->
     <link href="<?= site_url(); ?>assets/css/main.css" rel="stylesheet">
+
+    <script src="<?= site_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 </head>
 
 <body class="index-page">
 
-    <header id="header" class="header d-flex align-items-center sticky-top">
+    <header id="header" class="header d-flex align-items-center sticky-top shadow-sm bg-light">
         <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
 
             <a href="" class="logo d-flex align-items-center me-auto me-xl-0">
                 <!-- Logo lebih besar -->
+                <!-- <img src="<?= site_url() ?>images/img/logoo.jpg" alt="Logo" style="height:300px; width: auto;"> -->
                 <img src="<?= site_url() ?>images/img/logo.jpg" alt="Logo" style="height: 200px; width: auto; margin-right: 30px;">
 
                 <!-- Teks PSB Online -->
@@ -46,14 +49,10 @@
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="<?= site_url() ?>apps/landing/#hero">HOME</a></li>
-                    <li><a href="<?= site_url() ?>apps/landing#about">ABOUT</a></li>
-                    <li><a href="<?= site_url() ?>apps/landing#services">VISI & MISI</a></li>
-                    <li><a href="<?= site_url() ?>apps/landing#portfolio">INFORMASI</a></li>
-                    <li><a href="<?= site_url() ?>apps/landing/panduan#panduan">PANDUAN</a></li>
-                    <li><a href="<?= site_url() ?>apps/landing/galeri#galeri">GALERI</a></li>
-                    <li><a href="<?= site_url() ?>apps/landing/galeri#galeri">REGISTER</a></li>
-                    <li><a href="<?= site_url() ?>apps/landing/galeri#galeri">LOGIN</a></li>
+                    <li><a href="<?= site_url() ?>apps/pagemember/">HOME</a></li>
+                    <li><a href="<?= site_url() ?>apps/pagemember/addmember">DATA PENDAFTAR</a></li>
+                    <li><a href="<?= site_url() ?>apps/pagemember/pengumuman">PENGUMUMAN</a></li>
+                    <li><a href="<?= site_url() ?>apps/pagemember/">KELUAR</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
@@ -68,62 +67,41 @@
 
     <footer id="footer" class="footer light-background">
 
-        <div class="container footer-top">
+        <!-- <div class="container footer-top">
             <div class="row gy-4">
-                <div class="col-lg-5 col-md-12 footer-about">
+                <div class="col-lg-6 col-md-12 footer-about">
                     <a href="index.html" class="logo d-flex align-items-center">
-                        <span class="sitename">Lumia</span>
+                        <span class="sitename"><i class="bi bi-geo-alt-fill"></i> Location</span>
                     </a>
-                    <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
+                    <p class="mt-2"><strong>JL. DR. Sutomo, Kubu Marapalam, Kubu Marapalam, Kec. Padang Tim., Kota Padang, Sumatera Barat 25143</strong></p>
                     <div class="social-links d-flex mt-4">
-                        <a href=""><i class="bi bi-twitter-x"></i></a>
                         <a href=""><i class="bi bi-facebook"></i></a>
                         <a href=""><i class="bi bi-instagram"></i></a>
                         <a href=""><i class="bi bi-linkedin"></i></a>
                     </div>
                 </div>
 
-                <div class="col-lg-2 col-6 footer-links">
-                    <h4>Useful Links</h4>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Terms of service</a></li>
-                        <li><a href="#">Privacy policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-2 col-6 footer-links">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Product Management</a></li>
-                        <li><a href="#">Marketing</a></li>
-                        <li><a href="#">Graphic Design</a></li>
-                    </ul>
-                </div>
-
                 <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-                    <h4>Contact Us</h4>
-                    <p>A108 Adam Street</p>
-                    <p>New York, NY 535022</p>
-                    <p>United States</p>
-                    <p class="mt-4"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-                    <p><strong>Email:</strong> <span>info@example.com</span></p>
+                    <h4><i class="bi bi-envelope-fill"></i> Mail Us :</h4>
+                    <p class="mt-2"><strong>Phone :</strong> <span>+1 5589 55488 55</span></p>
+                    <p><strong>Email :</strong> <span>info@example.com</span></p>
                 </div>
+
+                <div class="col-lg-2 col-md-12 footer-contact text-center text-md-start">
+                    <h4><i class="bi bi-house-fill"></i> Open :</h4>
+                    <p class="mt-2"><strong>Setiap Hari :</trong> <span>08 : 15 WIB</span></p>
+                    <p><strong>Minggu (Libur)</trong>
+                    </p>
+                </div>
+
+
 
             </div>
-        </div>
+        </div> -->
 
         <div class="container copyright text-center mt-4">
             <p>© <span>Copyright</span> <strong class="px-1 sitename">Lumia</strong> <span>All Rights Reserved</span></p>
             <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you've purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
                 Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
             </div>
         </div>

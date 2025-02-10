@@ -4,10 +4,11 @@ namespace App\Controllers;
 
 class Dashboard extends BaseController
 {
-    public function index(): string
+    public function index()
 
     {
-        $data['title'] = 'Dashboard';
-        return view('Dashboard', $data);
+
+        // return view('Dashboard');
+        echo ('pagemember');
     }
 }

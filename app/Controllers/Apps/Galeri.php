@@ -242,4 +242,10 @@ class Galeri extends BaseController
             return redirect()->to('/galeri');
         }
     }
+
+    public function getAllDataGaleri()
+    {
+        $data = $this->galeriModel->findAll();
+        return $this->response->setJSON($data);
+    }
 };

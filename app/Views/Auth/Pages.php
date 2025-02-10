@@ -4,16 +4,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in (v2)</title>
+    <title></title>
+    <link href="<?= site_url(); ?>images/img/logo.jpg" rel="icon">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="<?= site_url(); ?>assets/plugins/fontawesome-free/css/all.min.css">
     <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="<?= site_url(); ?>assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css?v=3.2.0">
+    <link rel="stylesheet" href="<?= site_url(); ?>assets/dist/css/adminlte.min.css?v=3.2.0">
     <script data-cfasync="false" nonce="242a3214-32dd-46bc-89a4-98faf6dab80a">
         try {
             (function(w, d) {
@@ -110,18 +111,29 @@
             throw fetch("/cdn-cgi/zaraz/t"), e;
         };
     </script>
+    <style>
+        /* Background Fullscreen */
+        body {
+            background: url("<?= site_url('images/img/02.jpg') ?>") no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 
-<body class="hold-transition login-page">
 
-    <?= $this->renderSection('content') ?>
 
-    <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js?v=3.2.0"></script>
+<?= $this->renderSection('content') ?>
+
+<!-- jQuery -->
+<script src="<?= site_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="<?= site_url(); ?>assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="<?= site_url(); ?>assets/dist/js/adminlte.min.js?v=3.2.0"></script>
 </body>
 
 </html>

@@ -282,4 +282,11 @@ class Pengumuman extends BaseController
             return redirect()->to('/pengumuman');
         }
     }
+
+    // untuk halaman informasi
+    public function getAllData()
+    {
+        $data = $this->pengumumanModel->findAll();
+        return $this->response->setJSON($data);
+    }
 }

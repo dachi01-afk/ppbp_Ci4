@@ -6,17 +6,29 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-// $routes->get('/landing', 'LandingPage::index');
 
+$routes->get('/',                   'LandingPage::index');
 $routes->group('apps', static function ($routes) {
+    $routes->get('/',                   'LandingPage::index');
 
     $routes->group('landing', static function ($routes) {
-        $routes->get('/',               'LandingPage::index');
-        $routes->get('panduan',         'LandingPage::Panduan');
-        $routes->get('galeri',         'LandingPage::Galeri');
+        $routes->get('/',                   'LandingPage::index');
+        $routes->get('informasi',           'Apps\Pengumuman::getAllData');
+        $routes->get('panduan',             'LandingPage::Panduan');
+        $routes->get('galeri',              'LandingPage::Galeri');
+        $routes->get('getalldatagaleri',    'Apps\Galeri::getAllDataGaleri');
+
+        $routes->get('login',              'LandingPage::Login');
+        $routes->get('register',           'LandingPage::Register');
+
+        $routes->post('ceklogin',           'LandingPage::CekLogin');
     });
 
-    $routes->get('/', 'Apps\Dashboard::index');
+    $routes->group('pagemember', static function ($routes) {
+        $routes->get('/',               'MemberPage::index');
+        $routes->get('addmember',       'MemberPage::AddMember');
+        $routes->get('pengumuman',      'MemberPage::PengmumumanMember');
+    });
 
     $routes->group('dashboard', static function ($routes) {
         $routes->get('/',               'Apps\Dashboard::index');
